@@ -1,0 +1,10 @@
+{
+  "profile": "worldwide-agentic-web-mvp-0.2",
+  "site_url": "https://jalnanco.github.io/medsupply-depot-peer/",
+  "exported_networks": [
+    "medsupply_depot"
+  ],
+  "agent_card": "https://jalnanco.github.io/medsupply-depot-peer/.well-known/agent-card.json",
+  "manifest_sha256_sri": "sha256-PX6qZL6K9ix+KWmaEN5VPyzUY0ddkBIZCLrpCFvLdmQ=",
+  "network_sha256_sri": "sha256-BDzSXsvApdiLUEd33PH+PIyvQuOMFyD4Cu3LNhod8+o="
+}

@@ -1,0 +1,11 @@
+{
+  "networks": [
+    {
+      "name": "medsupply_depot"
+    }
+  ],
+  "actions": {
+    "version": 1,
+    "module": "./bridge-actions.js"
+  }
+}

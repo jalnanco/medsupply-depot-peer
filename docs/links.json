@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "networks": {
+    "medsupply_depot": {
+      "shelter_hub": "https://jalnanco.github.io/civicaid-beacon/civicaid_shelter_hub"
+    }
+  }
+}

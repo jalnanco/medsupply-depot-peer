@@ -1,0 +1,66 @@
+{
+  "@context": [
+    "https://schema.org",
+    "https://a2aproject.github.io/A2A/schema/v1",
+    "https://nandaindex.org/ns/agentfacts/v1"
+  ],
+  "@type": "SoftwareApplication",
+  "protocol": "open-agentic-web-mvp-0.2+nanda-agentfacts-v1",
+  "name": "MedSupply Cold-Chain Relief Depot (Peer Node)",
+  "description": "Independent open agentic website publishing regional insulin cold-chain, portable dialysis, oxygen, and pediatric relief stock for peer shelter hubs.",
+  "url": "https://jalnanco.github.io/medsupply-depot-peer/",
+  "version": "0.2.0",
+  "license": "https://opensource.org/licenses/MIT",
+  "provider": {
+    "organization": "CivicAid Open Humanitarian Mesh",
+    "url": "https://github.com/jalnanco/civicaid-beacon"
+  },
+  "capabilities": {
+    "browserExecution": true,
+    "declarativeNetworkJson": true,
+    "pluggableByokRouter": true,
+    "crossOriginPeerComposition": true,
+    "denyByDefaultSlyData": true,
+    "humanConfirmedWrites": true,
+    "webCryptoSignatureVerification": true
+  },
+  "entrypoints": {
+    "manifest": "https://jalnanco.github.io/medsupply-depot-peer/agent-manifest.json",
+    "network": "https://jalnanco.github.io/medsupply-depot-peer/medsupply_depot.network.json",
+    "links": "https://jalnanco.github.io/medsupply-depot-peer/links.json",
+    "actionBridge": "https://jalnanco.github.io/medsupply-depot-peer/bridge/action-bridge.html"
+  },
+  "authentication": {
+    "schemes": [
+      "none-public-artifacts",
+      "visitor-byok-bearer-local-only"
+    ]
+  },
+  "skills": [
+    {
+      "id": "cold_chain_biologics_stock",
+      "name": "2-8C Solar Cold-Chain Biologics Telemetry",
+      "description": "Reports live insulin pen, peritoneal dialysis kit, and oxygen concentrator counts with battery autonomy hours."
+    }
+  ],
+  "nanda_identity": {
+    "did": "did:web:jalnanco.github.io:medsupply-depot-peer",
+    "algorithm": "ECDSA-P256-SHA256",
+    "key_id": "nanda-p256-10ba2fcd2fee793f",
+    "network_name": "medsupply_depot",
+    "manifest_sha256_sri": "sha256-PX6qZL6K9ix+KWmaEN5VPyzUY0ddkBIZCLrpCFvLdmQ=",
+    "network_sha256_sri": "sha256-BDzSXsvApdiLUEd33PH+PIyvQuOMFyD4Cu3LNhod8+o=",
+    "signed_at": "2026-11-24T09:30:00Z",
+    "public_key_jwk": {
+      "key_ops": [
+        "verify"
+      ],
+      "ext": true,
+      "kty": "EC",
+      "x": "VQcrRZwmyCNGxPaUtiAgCmJls3U61ILVmqzV52X8dMQ",
+      "y": "yhmuVRNIJUEdn7_nGL9zBZKKq3cQMTzkxyoIz2UOUzc",
+      "crv": "P-256"
+    },
+    "signature_b64url": "ApjFBtWkgxKSg-08UPJZ2wv4t51thjCweVzR0Ikbqx92he8I7ZeBAsPjy3SD1YdKnYw5aLsrJzoCmnIviYRX-g"
+  }
+}

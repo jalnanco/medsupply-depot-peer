@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MedSupply Relief Depot — Open Agentic Web Peer Node</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --bg: #071318; --panel: #0d1f27; --border: #1e3a46; --teal: #14b8a6; --sky: #38bdf8; --text: #f1f5f9; --muted: #94a3b8; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Inter", sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+    header { padding: 20px 28px; border-bottom: 1px solid var(--border); background: #091920; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
+    h1 { margin: 0; font-size: 20px; font-weight: 800; }
+    .pill { font-family: "JetBrains Mono", monospace; font-size: 11.5px; padding: 4px 10px; border-radius: 999px; background: rgba(20,184,166,0.16); border: 1px solid rgba(20,184,166,0.45); color: #5eead4; }
+    main { max-width: 1180px; margin: 0 auto; padding: 24px 28px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; }
+    h2 { margin: 0 0 12px; font-size: 15px; color: #5eead4; text-transform: uppercase; letter-spacing: 0.04em; }
+    .depot { border: 1px solid var(--border); border-radius: 10px; padding: 14px; margin-bottom: 12px; background: #09171d; }
+    .depot-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .mono { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--sky); }
+    .stock-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 13px; }
+    .stock-item { background: #0f242e; padding: 8px 10px; border-radius: 7px; display: flex; justify-content: space-between; }
+    a { color: var(--sky); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { margin: 8px 0 0; padding-left: 18px; font-size: 13px; color: var(--muted); }
+    li { margin-bottom: 6px; }
+    input, button { font-family: inherit; font-size: 13px; border-radius: 8px; }
+    .ask-row { display: flex; gap: 8px; margin-top: 10px; }
+    input { flex: 1; background: #071318; border: 1px solid var(--border); color: var(--text); padding: 9px 12px; }
+    button { background: var(--teal); color: #042f2e; border: none; font-weight: 700; padding: 9px 14px; cursor: pointer; }
+    pre { background: #061015; border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-family: "JetBrains Mono", monospace; font-size: 12px; white-space: pre-wrap; color: #cbd5e1; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>MedSupply Cold-Chain Relief Depot <span class="mono">Peer Node</span></h1>
+      <div style="font-size:13px;color:var(--muted);margin-top:3px;">Independent Open Agentic Website publishing <code>medsupply_depot</code> (MVP Profile 0.2 + MIT NANDA ECDSA P-256)</div>
+    </div>
+    <span class="pill">CORS: * · Zero PII / sly_data Accepted</span>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Live Humanitarian Cold-Chain Inventory</h2>
+      <div id="depot-list"></div>
+      <h2 style="margin-top:18px;">Local Browser Agent Query (depot_pharmacist)</h2>
+      <div class="ask-row">
+        <input id="q-input" value="Which depot has refrigerated insulin pens and portable dialysis kits with step-free pickup?" />
+        <button id="ask-btn" type="button">Run Local Agent</button>
+      </div>
+      <pre id="ans-box">Ready. Query runs locally in your browser against grounded depot telemetry.</pre>
+    </section>
+    <section class="card">
+      <h2>Published Open Agentic Web Artifacts</h2>
+      <ul>
+        <li><a href="./agent-manifest.json">./agent-manifest.json</a> — Site manifest &amp; BYOK router policy</li>
+        <li><a href="./medsupply_depot.network.json">./medsupply_depot.network.json</a> — Resolved 2-agent JSON graph</li>
+        <li><a href="./links.json">./links.json</a> — Peer link map back to CivicAid Shelter Hub</li>
+        <li><a href="./bridge/action-bridge.html">./bridge/action-bridge.html</a> — Origin-isolated read action bridge</li>
+        <li><a href="./.well-known/agent-card.json">./.well-known/agent-card.json</a> — MIT NANDA ECDSA P-256 signed card</li>
+      </ul>
+      <pre id="card-preview">Loading /.well-known/agent-card.json ...</pre>
+    </section>
+  </main>
+  <script type="module">
+    import { DEPOT_DATA } from "./site-actions.js";
+    const listEl = document.getElementById("depot-list");
+    listEl.innerHTML = DEPOT_DATA.depots.map((d) => `
+      <div class="depot">
+        <div class="depot-head">
+          <strong>${d.name} (${d.code})</strong>
+          <span class="mono">${d.coldChainTempC}°C · Solar ${d.solarAutonomyHours}h · Step-Free</span>
+        </div>
+        <div class="stock-grid">
+          <div class="stock-item"><span>Insulin Glargine Pens</span><strong>${d.items.insulin_glargine_pens}</strong></div>
+          <div class="stock-item"><span>Peritoneal Dialysis Kits</span><strong>${d.items.peritoneal_dialysis_kits}</strong></div>
+          <div class="stock-item"><span>Portable Oxygen Units</span><strong>${d.items.portable_oxygen_concentrators}</strong></div>
+          <div class="stock-item"><span>Pediatric Inhaler Packs</span><strong>${d.items.pediatric_inhaler_packs}</strong></div>
+        </div>
+      </div>
+    `).join("");
+
+    document.getElementById("ask-btn").addEventListener("click", () => {
+      const q = document.getElementById("q-input").value.toLowerCase();
+      const d1 = DEPOT_DATA.depots[0];
+      const d2 = DEPOT_DATA.depots[1];
+      document.getElementById("ans-box").textContent =
+        `[depot_pharmacist -> cold_chain_specialist]\n` +
+        `Query: "${q}"\n` +
+        `• Primary Match: ${d1.name} (${d1.code}, ${d1.distanceKm} km) — ${d1.items.insulin_glargine_pens} insulin pens & ${d1.items.peritoneal_dialysis_kits} dialysis kits at ${d1.coldChainTempC}°C (${d1.solarAutonomyHours}h solar backup, step-free bay).\n` +
+        `• Secondary Match: ${d2.name} (${d2.code}, ${d2.distanceKm} km) — ${d2.items.insulin_glargine_pens} insulin pens, ${d2.items.portable_oxygen_concentrators} oxygen units at ${d2.coldChainTempC}°C.`;
+    });
+
+    fetch("./.well-known/agent-card.json")
+      .then((r) => r.ok ? r.json() : null)
+      .then((c) => {
+        if (c) document.getElementById("card-preview").textContent = JSON.stringify(c, null, 2);
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>

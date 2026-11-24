@@ -1,0 +1,87 @@
+{
+  "brand": "MedSupply Cold-Chain Relief Depot",
+  "networks": [
+    {
+      "name": "medsupply_depot",
+      "front_man": "depot_pharmacist",
+      "hocon": "./medsupply_depot.network.json",
+      "description": "Checks live emergency medical stock, solar cold-chain insulin storage, portable dialysis packs, and pediatric supplies across regional relief depots.",
+      "tags": [
+        "agentified-website",
+        "humanitarian-medical",
+        "open-agentic-web"
+      ],
+      "sample_queries": [
+        "Which depot currently has refrigerated insulin vials and backup solar power?",
+        "Check availability of portable peritoneal dialysis kits and wheelchair-accessible pickup.",
+        "What pediatric fever and asthma kits are ready for immediate dispatch?"
+      ]
+    }
+  ],
+  "llm_router": {
+    "base_url": "https://api.otari.ai/api/v1",
+    "mock": false,
+    "byok_router": "https://api.otari.ai/api/v1",
+    "recommended_model": "alibaba/qwen3.8-flash"
+  },
+  "allowed_peers": [
+    "https://jalnanco.github.io",
+    "http://127.0.0.1:8080",
+    "http://localhost:8080"
+  ],
+  "peer_policy": {
+    "mode": "open",
+    "deny_origins": [],
+    "note": "Public humanitarian inventory network callable by approved relief shelter hubs; receives zero patient PII or sly_data."
+  },
+  "agent_mcp": {
+    "protocol": "nsdeploy-agent-mcp/v1",
+    "network": "medsupply_depot",
+    "front_man": "depot_pharmacist",
+    "available": false,
+    "reason": "Static browser-executed agentic bundle; cross-site reads run via the origin-isolated action bridge."
+  },
+  "theme": {
+    "primary": "#0d9488"
+  },
+  "linking": {
+    "protocol": "nsdeploy-link/v1",
+    "exports": [
+      {
+        "network": "medsupply_depot",
+        "front_man": "depot_pharmacist",
+        "aliases": [
+          "medsupply_depot",
+          "depot_pharmacist"
+        ],
+        "url": "medsupply_depot"
+      }
+    ],
+    "imports": [
+      {
+        "alias": "shelter_hub",
+        "default_url": "https://jalnanco.github.io/civicaid-beacon/civicaid_shelter_hub"
+      }
+    ],
+    "link_updates": {
+      "mode": "browser-local"
+    }
+  },
+  "deployment": {
+    "mode": "static",
+    "self_contained_runtime": true,
+    "browser_mock": false,
+    "direct_byok": true,
+    "direct_mcp_requires_cors": true,
+    "public_mcp_facade": false
+  },
+  "actions": {
+    "version": 1,
+    "module": "./site-actions.js",
+    "bridge": "./bridge/action-bridge.html",
+    "agentTools": [
+      "get_depot_inventory",
+      "check_cold_chain_stock"
+    ]
+  }
+}

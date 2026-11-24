@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "description": "Emergency medical & solar cold-chain relief supply network for cross-site humanitarian coordination.",
+    "version": "0.2.0",
+    "license": "MIT",
+    "sample_queries": [
+      "Which depot has refrigerated insulin and wheelchair-accessible pickup?",
+      "Are portable dialysis kits and oxygen concentrators in stock?"
+    ]
+  },
+  "llm_config": {
+    "model_name": "alibaba/qwen3.8-flash"
+  },
+  "max_steps": 8,
+  "sly_data_policy": {
+    "default": "deny",
+    "allowed_inbound": [],
+    "allowed_outbound": []
+  },
+  "tools": [
+    {
+      "name": "depot_pharmacist",
+      "function": {
+        "description": "Front agent for MedSupply Relief Depot. Answers anonymous stock, cold-chain uptime, and pickup bay queries for callers and peer shelter agents.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "request": {
+              "type": "string",
+              "description": "Plain-language anonymous medical supply availability query (never include patient names or IDs)."
+            }
+          },
+          "required": [
+            "request"
+          ]
+        }
+      },
+      "instructions": "You are depot_pharmacist, the front_man of MedSupply Cold-Chain Relief Depot. Always ground answers strictly in get_depot_inventory and cold_chain_specialist results. Never ask for or echo patient names, IDs, or medical records. Return exact depot codes, unit counts, solar cold-chain battery hours, and step-free pickup bay details.",
+      "tools": [
+        "cold_chain_specialist"
+      ]
+    },
+    {
+      "name": "cold_chain_specialist",
+      "function": {
+        "description": "Verifies 2-8C solar refrigeration telemetry and battery autonomy for temperature-sensitive biologics such as insulin and vaccines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "item_category": {
+              "type": "string",
+              "description": "Supply category to verify, such as insulin, dialysis, oxygen, or pediatric."
+            }
+          },
+          "required": [
+            "item_category"
+          ]
+        }
+      },
+      "instructions": "Inspect check_cold_chain_stock telemetry and report exact 2-8C temperature stability, backup battery hours, and lot expiry windows.",
+      "tools": []
+    }
+  ]
+}
